@@ -3,6 +3,7 @@ import * as eventTypes from "./eventTypes";
 
 const initialState = {
   fetchStatus: FETCHS_TATUS.SUCCESS,
+  hasMoreCollections: true,
   collections: [],
   collection: null,
 };
@@ -16,10 +17,17 @@ export default function reducer(state = initialState, event) {
       };
 
     case eventTypes.APPEND_COLLECTIONS:
-      return {
-        ...state,
-        collections: [...state.collections, ...event.collections],
-      };
+      if (event.collections.length === 0) {
+        return {
+          ...state,
+          hasMoreCollections: false,
+        };
+      } else {
+        return {
+          ...state,
+          collections: [...state.collections, ...event.collections],
+        };
+      }
 
     case eventTypes.SET_COLLECTION:
       return {
