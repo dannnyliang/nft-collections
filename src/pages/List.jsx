@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { fetchCollections } from "../store/actions";
 
 const List = () => {
-  return <div>List Page</div>;
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      List Page
+      <button onClick={() => dispatch(fetchCollections())}>fetch</button>
+    </div>
+  );
 };
 
 export default List;
