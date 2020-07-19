@@ -5,6 +5,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -30,6 +31,9 @@ function Detail() {
   if (isFetching) {
     return (
       <>
+        <Helmet>
+          <title>收藏品詳情</title>
+        </Helmet>
         <DetailAppBar />
         <Container>
           <CircularProgress />
@@ -41,6 +45,9 @@ function Detail() {
   if (!collection) {
     return (
       <>
+        <Helmet>
+          <title>收藏品詳情</title>
+        </Helmet>
         <DetailAppBar />
         <Container>查無資料，請返回列表頁</Container>
       </>
@@ -49,6 +56,9 @@ function Detail() {
 
   return (
     <>
+      <Helmet>
+        <title>收藏品詳情 - {collection.name}</title>
+      </Helmet>
       <DetailAppBar />
       <Container>
         <Box paddingY={3} maxWidth="500px" marginX="auto">

@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 
 import CollectionCard from "../components/CollectionCard";
@@ -70,35 +71,40 @@ const List = () => {
   }, [trackScrolling]);
 
   return (
-    <Container>
-      <Box paddingY={3}>
-        <Typography align="center" variant="h3">
-          收藏品列表
-        </Typography>
-        <Typography align="center" variant="body1">
-          current account: {account}
-        </Typography>
-      </Box>
-      <Grid innerRef={listRef} container spacing={3}>
-        {collections.map((collection) => (
-          <Grid item xs={6} sm={4} md={3}>
-            <CollectionCard
-              key={collection.token_id}
-              tokenId={collection.token_id}
-              contractAddress={collection.asset_contract.address}
-              name={collection.name}
-              imageUrl={collection.image_url}
-            />
-          </Grid>
-        ))}
-      </Grid>
-      {isFetching && <CircularProgress />}
-      {!hasMoreCollections && (
-        <Typography align="center" variant="body1">
-          no more collections
-        </Typography>
-      )}
-    </Container>
+    <>
+      <Helmet>
+        <title>收藏品列表</title>
+      </Helmet>
+      <Container>
+        <Box paddingY={3}>
+          <Typography align="center" variant="h3">
+            收藏品列表
+          </Typography>
+          <Typography align="center" variant="body1">
+            current account: {account}
+          </Typography>
+        </Box>
+        <Grid innerRef={listRef} container spacing={3}>
+          {collections.map((collection) => (
+            <Grid item xs={6} sm={4} md={3}>
+              <CollectionCard
+                key={collection.token_id}
+                tokenId={collection.token_id}
+                contractAddress={collection.asset_contract.address}
+                name={collection.name}
+                imageUrl={collection.image_url}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        {isFetching && <CircularProgress />}
+        {!hasMoreCollections && (
+          <Typography align="center" variant="body1">
+            no more collections
+          </Typography>
+        )}
+      </Container>
+    </>
   );
 };
 
