@@ -8,10 +8,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import DetailAppBar from "../components/DetailAppBar";
+import Permalink from "../components/Permalink";
 import { fetchCollection } from "../store/actions";
 import { FETCHS_TATUS } from "../store/constant";
-import DetailAppBar from "./DetailAppBar";
-import Permalink from "./Permalink";
 
 function Detail() {
   const { contractAddress, tokenId } = useParams();
