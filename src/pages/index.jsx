@@ -8,7 +8,7 @@ function Index() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/collections/:id">
+        <Route path="/collections/:contractAddress/:tokenId">
           <Detail />
         </Route>
         <Route path="/collections">
