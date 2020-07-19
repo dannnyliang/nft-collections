@@ -10,6 +10,15 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
+  "devDependencies": {
+    "cz-conventional-changelog": "3.2.0",
+    "husky": "^4.2.5",
+    "import-sort": "^6.0.0",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-style-module": "^6.0.0",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -30,5 +39,29 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test"
+    }
+  },
+  "lint-staged": {
+    "**/*{.js,jsx,ts,tsx}": [
+      "import-sort --write",
+      "eslint --fix --quiet",
+      "prettier --write"
+    ]
+  },
+  "importSort": {
+    ".js,.jsx": {
+      "parser": "babylon",
+      "style": "module"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
