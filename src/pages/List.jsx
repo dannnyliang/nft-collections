@@ -1,4 +1,5 @@
 import {
+  Box,
   CircularProgress,
   Container,
   Grid,
@@ -46,9 +47,11 @@ const List = () => {
 
   return (
     <Container>
-      <Typography align="center" variant="h3">
-        收藏品列表
-      </Typography>
+      <Box paddingY={3}>
+        <Typography align="center" variant="h3">
+          收藏品列表
+        </Typography>
+      </Box>
       <Grid innerRef={listRef} container spacing={3}>
         {collections.map((collection) => (
           <Grid item xs={6} sm={4} md={3}>

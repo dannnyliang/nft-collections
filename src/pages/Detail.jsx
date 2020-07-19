@@ -1,4 +1,9 @@
-import { CircularProgress, Container, Typography } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -46,13 +51,13 @@ function Detail() {
     <>
       <DetailAppBar />
       <Container>
-        <img src={collection.image_url} alt={collection.name} width="100%" />
+        <Box paddingY={3} maxWidth="500px" marginX="auto">
+          <img src={collection.image_url} alt={collection.name} width="100%" />
+        </Box>
         <Typography align="center" variant="h3" gutterBottom>
           {collection.name}
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          {collection.description}
-        </Typography>
+        <Typography variant="body1">{collection.description}</Typography>
       </Container>
       <Permalink url={collection.permalink} />
     </>
