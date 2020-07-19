@@ -33,6 +33,9 @@ const List = () => {
         {collections.map((collection) => (
           <Grid item xs={6} sm={4} md={3}>
             <CollectionCard
+              key={collection.token_id}
+              tokenId={collection.token_id}
+              contractAddress={collection.asset_contract.address}
               name={collection.name}
               imageUrl={collection.image_url}
             />
