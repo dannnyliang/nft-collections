@@ -6,14 +6,16 @@ import styled from "styled-components";
 const bottomSpace = 12;
 
 function Permalink(props) {
-  const { className } = props;
+  const { className, url } = props;
   return (
     <div className={className}>
       <Box className="space" />
       <div className="float-button">
-        <Button variant="contained" color="primary">
-          permalink
-        </Button>
+        <a target="__blank" href={url}>
+          <Button variant="contained" color="primary">
+            permalink
+          </Button>
+        </a>
       </div>
     </div>
   );
@@ -34,6 +36,7 @@ const StyledPermalink = styled(Permalink)`
 
 StyledPermalink.propTypes = {
   classname: PropTypes.string,
+  url: PropTypes.string.isRequired,
 };
 
 export default StyledPermalink;

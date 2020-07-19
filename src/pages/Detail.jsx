@@ -54,7 +54,7 @@ function Detail() {
           {collection.description}
         </Typography>
       </Container>
-      <Permalink />
+      <Permalink url={collection.permalink} />
     </>
   );
 }
