@@ -1,0 +1,5 @@
+export const FETCHS_TATUS = {
+  PENDING: "PENDING",
+  SUCCESS: "SUCCESS",
+  FAIL: "FAIL",
+};
