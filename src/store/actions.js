@@ -50,6 +50,8 @@ export function fetchCollection(fetchOptions) {
   const { contractAddress, tokenId } = fetchOptions;
 
   return (dispatch) => {
+    dispatch(fetchStart());
+
     fetch(`https://api.opensea.io/api/v1/asset/${contractAddress}/${tokenId}/`)
       .then((response) => response.json())
       .then((result) => {
