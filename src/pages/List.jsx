@@ -5,38 +5,62 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CollectionCard from "../components/CollectionCard";
 import { fetchCollections } from "../store/actions";
 import { FETCHS_TATUS } from "../store/constant";
+import useWeb3 from "../useWeb3";
 
 const isReachBottom = (element) =>
   element.getBoundingClientRect().bottom <= window.innerHeight;
 
 const List = () => {
+  const [account, setAccount] = useState();
   const dispatch = useDispatch();
   const collections = useSelector((state) => state.collections);
   const fetchStatus = useSelector((state) => state.fetchStatus);
   const hasMoreCollections = useSelector((state) => state.hasMoreCollections);
   const listRef = useRef(null);
 
+  const { web3, error } = useWeb3();
+
+  if (error) {
+    console.error(error);
+  }
+
   const isFetching = fetchStatus === FETCHS_TATUS.PENDING;
 
   const trackScrolling = useCallback(() => {
     if (listRef.current) {
-      if (isReachBottom(listRef.current) && !isFetching && hasMoreCollections) {
-        dispatch(fetchCollections({ offset: collections.length }));
+      if (
+        account &&
+        !isFetching &&
+        hasMoreCollections &&
+        isReachBottom(listRef.current)
+      ) {
+        dispatch(
+          fetchCollections({ owner: account, offset: collections.length })
+        );
       }
     }
-  }, [collections.length, dispatch, hasMoreCollections, isFetching]);
+  }, [account, collections.length, dispatch, hasMoreCollections, isFetching]);
 
   useEffect(() => {
-    if (collections.length === 0) {
-      dispatch(fetchCollections());
+    if (web3) {
+      // eslint-disable-next-line no-unused-expressions
+      web3?.eth.getAccounts().then((res) => {
+        setAccount(res[0]);
+      });
     }
-  }, [collections.length, dispatch]);
+  }, [web3]);
+
+  useEffect(() => {
+    if (collections.length === 0 && account) {
+      dispatch(fetchCollections({ owner: account }));
+    }
+  }, [account, collections.length, dispatch]);
 
   useEffect(() => {
     document.addEventListener("scroll", trackScrolling);
@@ -50,6 +74,9 @@ const List = () => {
       <Box paddingY={3}>
         <Typography align="center" variant="h3">
           收藏品列表
+        </Typography>
+        <Typography align="center" variant="body1">
+          current account: {account}
         </Typography>
       </Box>
       <Grid innerRef={listRef} container spacing={3}>
@@ -66,7 +93,11 @@ const List = () => {
         ))}
       </Grid>
       {isFetching && <CircularProgress />}
-      {!hasMoreCollections && <div>no more collections</div>}
+      {!hasMoreCollections && (
+        <Typography align="center" variant="body1">
+          no more collections
+        </Typography>
+      )}
     </Container>
   );
 };
