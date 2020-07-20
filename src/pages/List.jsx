@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CollectionCard from "../components/CollectionCard";
 import { fetchCollections } from "../store/actions";
-import { FETCHS_TATUS } from "../store/constant";
+import { FETCHS_TATUS, defaultOwnerAddress } from "../store/constant";
 import useWeb3 from "../useWeb3";
 
 const isReachBottom = (element) =>
@@ -32,6 +32,10 @@ const List = () => {
   }
 
   const isFetching = fetchStatus === FETCHS_TATUS.PENDING;
+
+  const handleUseDefaultAccount = () => {
+    setAccount(defaultOwnerAddress);
+  };
 
   const trackScrolling = useCallback(() => {
     if (listRef.current) {
@@ -82,6 +86,10 @@ const List = () => {
           </Typography>
           <Typography align="center" variant="body1">
             current account: {account}
+            <br />
+            <button onClick={() => handleUseDefaultAccount()}>
+              use default address
+            </button>
           </Typography>
         </Box>
         <Grid innerRef={listRef} container spacing={3}>
@@ -98,7 +106,7 @@ const List = () => {
           ))}
         </Grid>
         {isFetching && <CircularProgress />}
-        {!hasMoreCollections && (
+        {!isFetching && !hasMoreCollections && (
           <Typography align="center" variant="body1">
             no more collections
           </Typography>

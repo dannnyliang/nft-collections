@@ -17,17 +17,11 @@ export default function reducer(state = initialState, event) {
       };
 
     case eventTypes.APPEND_COLLECTIONS:
-      if (event.collections.length === 0) {
-        return {
-          ...state,
-          hasMoreCollections: false,
-        };
-      } else {
-        return {
-          ...state,
-          collections: [...state.collections, ...event.collections],
-        };
-      }
+      return {
+        ...state,
+        collections: [...state.collections, ...event.collections],
+        hasMoreCollections: event.hasMoreCollections,
+      };
 
     case eventTypes.SET_COLLECTION:
       return {

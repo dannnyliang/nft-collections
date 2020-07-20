@@ -13,8 +13,12 @@ function fetchFail() {
   return { type: eventTypes.SET_FETCHING_STATUS, status: FETCHS_TATUS.FAIL };
 }
 
-function appendCollections(collections) {
-  return { type: eventTypes.APPEND_COLLECTIONS, collections };
+function appendCollections(collections, hasMoreCollections) {
+  return {
+    type: eventTypes.APPEND_COLLECTIONS,
+    collections,
+    hasMoreCollections,
+  };
 }
 
 function setCollection(collection) {
@@ -22,11 +26,7 @@ function setCollection(collection) {
 }
 
 export function fetchCollections(fetchOptions = {}) {
-  const {
-    owner = "0x960DE9907A2e2f5363646d48D7FB675Cd2892e91",
-    offset = 0,
-    limit = 20,
-  } = fetchOptions;
+  const { owner, offset = 0, limit = 20 } = fetchOptions;
 
   return (dispatch) => {
     dispatch(fetchStart());
@@ -41,7 +41,9 @@ export function fetchCollections(fetchOptions = {}) {
         }
 
         dispatch(fetchSuccess());
-        dispatch(appendCollections(result.assets));
+        dispatch(
+          appendCollections(result.assets, result.assets.length === limit)
+        );
       });
   };
 }
