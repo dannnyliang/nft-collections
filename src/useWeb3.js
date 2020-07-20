@@ -10,6 +10,7 @@ const useWeb3 = () => {
       setError(
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
+      return;
     }
 
     setWeb3(new Web3(window.web3.currentProvider));
